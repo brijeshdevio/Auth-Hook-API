@@ -8,8 +8,25 @@ import { errorHandler, rateLimiter } from "./middlewares/index.js";
 
 const app = express();
 
+const ALLOWED_ORIGINS = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim());
+
 app.use(
   cors({
+    origin: function (origin, callback) {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(
+          new ApiError({
+            statusCode: 403,
+            code: "FORBIDDEN",
+            message: "Forbidden by CORS policy",
+          })
+        );
+      }
+    },
     credentials: true,
   })
 );
