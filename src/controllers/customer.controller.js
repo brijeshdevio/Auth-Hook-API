@@ -13,7 +13,7 @@ class CustomerController extends CustomerService {
 
   handleLoginCustomer = async (req, res) => {
     const customer = await this.loginCustomer(req.body);
-    const token = signCookie(res, { id: customer._id });
+    const token = signCookie(res, { id: customer.id });
     response(res, 200, null, { token });
   };
 
@@ -21,6 +21,11 @@ class CustomerController extends CustomerService {
     const { id } = req.auth;
     const customer = await this.getCustomer(id);
     response(res, 200, customer);
+  };
+
+  handleLogoutCustomer = async (req, res) => {
+    res.clearCookie(process.env.COOKIE_NAME);
+    response(res, 200, null);
   };
 }
 
