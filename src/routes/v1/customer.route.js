@@ -19,5 +19,6 @@ router.post(
   customerController.handleLoginCustomer
 );
 router.get("/me", authGuard, customerController.handleGetCustomer);
+router.post("/logout", authGuard, customerController.handleLogoutCustomer);
 
 export default router;

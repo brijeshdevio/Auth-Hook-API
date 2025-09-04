@@ -36,6 +36,11 @@ class UserController extends UserService {
     const user = await this.deleteUser(customer, id);
     response(res, 200, user);
   };
+
+  handleLogoutUser = async (req, res) => {
+    res.clearCookie(process.env.COOKIE_NAME);
+    response(res, 200, null);
+  };
 }
 
 export default UserController;

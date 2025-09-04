@@ -22,5 +22,6 @@ router.patch(
   userController.handleUpdateUser
 );
 router.delete("/me", authGuard, userController.handleDeleteUser);
+router.post("/logout", authGuard, userController.handleLogoutUser);
 
 export default router;
