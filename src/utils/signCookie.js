@@ -10,7 +10,7 @@ const signCookie = (res, secret, options = {}) => {
   const httpOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "None",
     expiresIn: parseInt(process.env.JWT_EXPIRES_IN) * oneDay || oneDay * 7,
     ...options,
   };
