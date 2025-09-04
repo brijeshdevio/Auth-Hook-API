@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes/index.js";
 import { errorHandler, rateLimiter } from "./middlewares/index.js";
+import { ApiError } from "./utils/index.js";
 
 const app = express();
 
