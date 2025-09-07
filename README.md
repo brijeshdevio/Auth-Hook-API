@@ -1,8 +1,8 @@
-# 🔐 AuthHookApi
+# 🔐 AuthHook
 
 > **A robust, multi-tenant Authentication-as-a-Service (AaaS) platform built with Node.js, Express, and TypeScript**
 
-AuthHookApi is a production-ready authentication service that enables developers to seamlessly integrate secure user authentication into their applications. With multi-tenancy support, comprehensive API key management, and enterprise-grade security features.
+Auth-Hook-API is a production-ready authentication service that enables developers to seamlessly integrate secure user authentication into their applications. With multi-tenancy support, comprehensive API key management, and enterprise-grade security features.
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://typescriptlang.org)
@@ -62,8 +62,8 @@ AuthHookApi is a production-ready authentication service that enables developers
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/AuthHookApi.git
-   cd AuthHookApi
+   git clone https://github.com/yourusername/Auth-Hook-API.git
+   cd Auth-Hook-API
    ```
 
 2. **Install dependencies**
@@ -431,9 +431,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙋‍♂️ Support
 
-- **Documentation**: [API Docs](https://your-docs-url.com)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/AuthHookApi/issues)
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
+- **Documentation**: [API Docs](https://github.com/brijeshdevio/Auth-Hook-API/blob/main/README.md)
+- **Issues**: [GitHub Issues](https://github.com/brijeshdevio/Auth-Hook-API/issues)
+- **Email**: [brijeshsoftdev@duck.com](mailto:brijeshsoftdev@duck.com)
 
 ---
 
@@ -452,8 +452,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Made with ❤️ by [Your Name](https://github.com/yourusername)**
+**Made with ❤️ by [Brijesh](https://github.com/brijeshdevio)**
 
-[⭐ Star this repo](https://github.com/yourusername/AuthHookApi) | [🐛 Report Issues](https://github.com/yourusername/AuthHookApi/issues) | [💡 Request Features](https://github.com/yourusername/AuthHookApi/issues)
+[⭐ Star this repo](https://github.com/brijeshdevio/Auth-Hook-API) | [🐛 Report Issues](https://github.com/brijeshdevio/Auth-Hook-API/issues) | [💡 Request Features](https://github.com/brijeshdevio/Auth-Hook-API/issues)
 
 </div>
