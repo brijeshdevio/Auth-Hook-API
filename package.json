@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "nodemon index.ts",
+    "dev": "nodemon ./src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "vercel-build": "echo 'Build completed'"
+    "start": "node ./api/index.js",
+    "vercel-build": "echo 'Building for Vercel deployment'"
   },
   "keywords": [],
   "author": "Brijesh <brijeshio@duck.com>",

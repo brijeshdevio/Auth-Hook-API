@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const controllers_1 = require("../../controllers");
+const express_1 = require("express");
+const middlewares_1 = require("../../middlewares");
+const controller = new controllers_1.AppController();
+const router = (0, express_1.Router)();
+const isValid = middlewares_1.validateMiddleware.isValid("params", "appId", "App");
+router.post("/", controller.handleCreateApp);
+router.get("/", controller.handleGetApps);
+router.get("/:appId", isValid, controller.handleGetApp);
+router.delete("/:appId", isValid, controller.handleDeleteApp);
+router.post("/:appId/rotate-key", isValid, controller.handleRotateApp);
+exports.default = router;
