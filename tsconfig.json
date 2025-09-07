@@ -3,8 +3,8 @@
     "target": "ES2017",
     "module": "commonjs",
     "lib": ["ES6"],
-    "outDir": "./api", // Critical: Output goes to /dist
-    "rootDir": "./src", // Critical: Compile everything from the root
+    "outDir": "./dist",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
