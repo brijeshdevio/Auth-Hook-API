@@ -175,7 +175,7 @@ curl -X POST http://localhost:3000/api/v1/apps \
     "app": {
       "id": "64f9b1c2d1a2b3c4e5f6a7b8",
       "name": "My Awesome App",
-      "apiKey": "sk_live_1a2b3c4d5e6f7g8h9i0j1k2l3m4n",
+      "apiKey": "sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxx",
       "createdAt": "2024-09-07T14:30:00.000Z"
     }
   }
@@ -201,7 +201,7 @@ curl -X POST http://localhost:3000/api/v1/apps \
 ```bash
 curl -X POST http://localhost:3000/api/v1/users/register \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: sk_live_1a2b3c4d5e6f7g8h9i0j1k2l3m4n" \
+  -H "X-API-Key: YOUR_API_KEY_HERE" \
   -d '{
     "name": "Alice Smith",
     "email": "alice@example.com",
@@ -213,7 +213,7 @@ curl -X POST http://localhost:3000/api/v1/users/register \
 ```bash
 curl -X POST http://localhost:3000/api/v1/users/login \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: sk_live_1a2b3c4d5e6f7g8h9i0j1k2l3m4n" \
+  -H "X-API-Key: YOUR_API_KEY_HERE" \
   -d '{
     "email": "alice@example.com",
     "password": "userpassword123"
