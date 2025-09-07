@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "lib": ["ES6"],
+    "outDir": "./dist", // Critical: Output goes to /dist
+    "rootDir": "./", // Critical: Compile everything from the root
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["**/*.ts"], // Include all .ts files everywhere
+  "exclude": ["node_modules", "dist"]
+}

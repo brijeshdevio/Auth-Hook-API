@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.ts",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "vercel-build": "echo 'Vercel build complete'"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brijesh <brijeshio@duck.com>",
   "license": "ISC",
   "dependencies": {
     "argon2": "^0.44.0",
@@ -27,6 +28,19 @@
     "zod": "^4.1.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/argon2": "^0.14.1",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.3",
+    "@types/helmet": "^0.0.48",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.3.1",
+    "@types/winston": "^2.4.4",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }
