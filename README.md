@@ -175,7 +175,7 @@ curl -X POST http://localhost:3000/api/v1/apps \
     "app": {
       "id": "64f9b1c2d1a2b3c4e5f6a7b8",
       "name": "My Awesome App",
-      "apiKey": "sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "apiKey": "ak_live_your_generated_api_key_here",
       "createdAt": "2024-09-07T14:30:00.000Z"
     }
   }

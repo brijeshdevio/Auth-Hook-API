@@ -24,7 +24,7 @@ class AppService {
   private async generateAppApiKey(): Promise<string> {
     const ts = Date.now().toString(36).toLowerCase();
     const rand = randomBytes(12).toString("hex").toLowerCase();
-    const apiKey = "sk_live_" + ts + rand;
+    const apiKey = "ak_live_" + ts + rand;
     const isUniqueKey = await Application.findOne({ apiKey });
     if (isUniqueKey) {
       return await this.generateAppApiKey();
