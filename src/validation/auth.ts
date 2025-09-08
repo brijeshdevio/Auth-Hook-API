@@ -40,3 +40,18 @@ export const updateSchema = zod
     name: name.optional(),
   })
   .strict();
+
+export const verifyEmailSchema = zod
+  .object({
+    email,
+    code: zod
+      .string({ error: "Code is required" })
+      .length(8, { message: "Code must be 8 characters long" }),
+  })
+  .strict();
+
+export const emailSchema = zod
+  .object({
+    email,
+  })
+  .strict();

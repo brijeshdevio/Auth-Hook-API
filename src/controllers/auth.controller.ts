@@ -9,8 +9,20 @@ class AuthController extends AuthService {
 
   handleRegister = async (req: Request, res: Response) => {
     const data = req.body;
-    const user = await this.register(data);
-    response(res, 201, { user });
+    await this.register(data);
+    response(res, 201, { message: "User created. Please verify your email." });
+  };
+
+  handleVerifyEmail = async (req: Request, res: Response) => {
+    const data = req.body;
+    await this.verifyEmail(data);
+    response(res, 200, { message: "Email verified successfully" });
+  };
+
+  handleResendVerifyEmail = async (req: Request, res: Response) => {
+    const data = req.body;
+    await this.resendVerifyEmail(data);
+    response(res, 200, { message: "Email sent successfully" });
   };
 
   handleLogin = async (req: Request, res: Response) => {

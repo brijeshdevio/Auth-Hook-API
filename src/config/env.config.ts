@@ -9,6 +9,9 @@ const env = {
   X_API_KEY: process.env.X_API_KEY,
   RATE_LIMIT_WINDOW_MS: process.env.RATE_LIMIT_WINDOW_MS,
   RATE_LIMIT_MAX: process.env.RATE_LIMIT_MAX,
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASS: process.env.EMAIL_PASS,
+  BASE_API_URL: process.env.BASE_API_URL,
 };
 
 const envConfig = (key: keyof typeof env): string => {

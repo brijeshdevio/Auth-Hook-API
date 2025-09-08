@@ -11,6 +11,15 @@ Auth-Hook-API is a production-ready authentication service that enables develope
 
 ## ✨ Features
 
+### 📧 Email Verification System ✨ **NEW**
+
+- **Secure 8-Character Codes**: Cryptographically generated verification codes
+- **Time-Limited Validity**: Codes expire in 10 minutes for security
+- **Professional Templates**: Branded HTML email templates with dynamic content
+- **Rate Limited**: Anti-spam protection with configurable limits
+- **Gmail SMTP Integration**: Reliable email delivery via Gmail service
+- **Temporary Storage**: Secure handling of unverified accounts
+
 ### 🏢 Multi-Tenant Architecture
 
 - **Isolated Tenants**: Complete data isolation between different customers
@@ -31,6 +40,8 @@ Auth-Hook-API is a production-ready authentication service that enables develope
 - **Rate Limiting**: Built-in DDoS protection and abuse prevention
 - **CORS & Helmet**: Comprehensive web security headers
 - **Input Validation**: Type-safe validation using Zod schemas
+- **Email Verification**: Secure 8-character verification codes with expiration
+- **Temporary User Storage**: Secure temporary storage for unverified accounts
 
 ### 🚀 Developer Experience
 
@@ -46,6 +57,8 @@ Auth-Hook-API is a production-ready authentication service that enables develope
 - **Database Integration**: Optimized MongoDB integration with Mongoose
 - **Middleware Stack**: Comprehensive middleware for security and functionality
 - **Error Recovery**: Graceful error handling and recovery mechanisms
+- **Email Service**: Integrated Nodemailer with Gmail SMTP support
+- **Template System**: Professional HTML email templates with dynamic content
 
 ---
 
@@ -92,6 +105,10 @@ Auth-Hook-API is a production-ready authentication service that enables develope
 
    RATE_LIMIT_WINDOW_MS=900000
    RATE_LIMIT_MAX=100
+
+   # Email Configuration (Gmail SMTP)
+   EMAIL_USER=your-gmail@gmail.com
+   EMAIL_PASS=your-16-character-app-password
    ```
 
 4. **Start the server**
@@ -105,6 +122,22 @@ Auth-Hook-API is a production-ready authentication service that enables develope
    ```
 
 The API will be available at `http://localhost:3000`
+
+### 📧 Gmail SMTP Setup (For Email Verification)
+
+1. **Enable 2-Factor Authentication** on your Gmail account
+2. **Generate App Password**:
+   - Go to Google Account Settings
+   - Security → 2-Step Verification → App passwords
+   - Generate a new app password for "Mail"
+3. **Update Environment Variables**:
+   ```env
+   EMAIL_USER=your-gmail@gmail.com
+   EMAIL_PASS=your-16-character-app-password
+   ```
+4. **Test Email Service**: Registration will automatically send verification emails
+
+> **Note**: The system uses a temporary storage model for unverified accounts. Users must verify their email within 10 minutes of registration.
 
 ---
 
@@ -126,14 +159,16 @@ All API endpoints are prefixed with `/api/v1`
 
 > **Authentication**: None required for signup/login, JWT token for protected routes
 
-| Method   | Endpoint         | Description                      | Auth Required |
-| -------- | ---------------- | -------------------------------- | ------------- |
-| `POST`   | `/auth/register` | Register a new developer account | None          |
-| `POST`   | `/auth/login`    | Developer login                  | None          |
-| `GET`    | `/dev/me`        | Get developer profile            | Developer JWT |
-| `PATCH`  | `/dev/me`        | Update developer profile         | Developer JWT |
-| `POST`   | `/dev/logout`    | Logout developer                 | Developer JWT |
-| `DELETE` | `/dev/delete`    | Delete developer account         | Developer JWT |
+| Method   | Endpoint                    | Description                      | Auth Required |
+| -------- | --------------------------- | -------------------------------- | ------------- |
+| `POST`   | `/auth/register`            | Register a new developer account | None          |
+| `POST`   | `/auth/verify-email`        | Verify email with 8-digit code   | Rate Limited  |
+| `POST`   | `/auth/resend-verify-email` | Resend verification email        | Rate Limited  |
+| `POST`   | `/auth/login`               | Developer login                  | None          |
+| `GET`    | `/dev/me`                   | Get developer profile            | Developer JWT |
+| `PATCH`  | `/dev/me`                   | Update developer profile         | Developer JWT |
+| `POST`   | `/dev/logout`               | Logout developer                 | Developer JWT |
+| `DELETE` | `/dev/delete`               | Delete developer account         | Developer JWT |
 
 ### Registration Example
 
@@ -145,6 +180,60 @@ curl -X POST http://localhost:3000/api/v1/auth/register \
     "email": "john@example.com",
     "password": "securepassword123"
   }'
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "User created. Please verify your email."
+  }
+}
+```
+
+### Email Verification Example
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/verify-email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com",
+    "code": "ABC123XY"
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Email verified successfully"
+  }
+}
+```
+
+### Resend Verification Email Example
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/resend-verify-email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com"
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Email sent successfully"
+  }
+}
 ```
 
 ### Login Example
@@ -290,12 +379,16 @@ src/
 ├── config/                 # Configuration files
 │   ├── db.config.ts       # Database connection
 │   ├── env.config.ts      # Environment variables
+│   ├── email.config.ts    # Email service configuration
 │   └── index.ts           # Config exports
 ├── controllers/           # Route handlers
 │   ├── auth.controller.ts # Authentication logic
 │   ├── dev.controller.ts  # Developer management
 │   ├── user.controller.ts # User management
 │   └── app.controller.ts  # Application management
+├── email-templates/       # Email HTML templates
+│   ├── verification.ts    # Email verification template
+│   └── index.ts          # Template exports
 ├── middlewares/           # Express middlewares
 │   ├── auth.middleware.ts # JWT authentication
 │   ├── apiKey.middleware.ts # API key validation
@@ -304,10 +397,13 @@ src/
 ├── models/                # MongoDB models
 │   ├── Developer.model.ts # Developer schema
 │   ├── Application.model.ts # Application schema
-│   └── User.model.ts      # User schema
+│   ├── User.model.ts      # User schema
+│   └── Temporary.model.ts # Temporary user storage
 ├── routes/                # API routes
 │   └── v1/               # API version 1
 ├── services/             # Business logic
+├── types/                # TypeScript type definitions
+│   └── index.d.ts        # Global types and interfaces
 ├── utils/                # Helper functions
 └── validation/           # Zod schemas
 ```
@@ -335,6 +431,8 @@ npm test         # Run tests (if configured)
 | `CORS_ORIGINS`         | Allowed CORS origins      | `*`           |
 | `RATE_LIMIT_WINDOW_MS` | Rate limit window         | `900000`      |
 | `RATE_LIMIT_MAX`       | Max requests per window   | `100`         |
+| `EMAIL_USER`           | Gmail email address       | Required      |
+| `EMAIL_PASS`           | Gmail app password        | Required      |
 
 ---
 
@@ -395,6 +493,9 @@ railway deploy
 - ✅ **CORS Protection**: Configurable origin whitelist
 - ✅ **Security Headers**: Helmet.js integration
 - ✅ **API Key Security**: Cryptographically secure generation
+- ✅ **Email Verification**: 8-character codes with 10-minute expiration
+- ✅ **Temporary Storage**: Secure handling of unverified accounts
+- ✅ **Rate Limited Verification**: Prevents email spam and abuse
 
 ### Recommendations
 
@@ -439,14 +540,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🚀 What's Next?
 
-- [ ] Email verification system
+- [x] **Email verification system** ✨ **COMPLETED**
 - [ ] Password reset functionality
-- [ ] OAuth 2.0 integration
-- [ ] Webhook support
-- [ ] Analytics dashboard
-- [ ] Mobile SDKs
-- [ ] Advanced rate limiting per user
+- [ ] OAuth 2.0 integration (Google, GitHub, etc.)
+- [ ] Webhook support for real-time events
+- [ ] Analytics dashboard for usage insights
+- [ ] Mobile SDKs (iOS, Android, React Native)
+- [ ] Advanced rate limiting per user/application
 - [ ] Audit logs and compliance features
+- [ ] Email templates customization
+- [ ] Multi-factor authentication (2FA)
+- [ ] Session management and device tracking
 
 ---
 

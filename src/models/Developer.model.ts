@@ -9,6 +9,7 @@ const developerSchema = new mongoose.Schema(
     },
     name: String,
     profileUrl: String,
+    verified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
